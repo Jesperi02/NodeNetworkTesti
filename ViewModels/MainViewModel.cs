@@ -65,6 +65,7 @@ namespace NodeNetworkTesti.ViewModels
                 return new NetworkValidationResult(true, true, null);
             };
                     //kommentti
+                    //testi kommentti
             output.ResultInput.ValueChanged
                 .Select(v => (NetworkViewModel.LatestValidation?.IsValid ?? true) ? v.ToString() : "Error")
                 .BindTo(this, vm => vm.ValueLabel);
