@@ -56,6 +56,49 @@ namespace NodeNetworkTesti.Views
                 this.OneWayBind(ViewModel, vm => vm.ValueLabel, v => v.valueLabel.Content).DisposeWith(d);
             });
         }
+
+        private void xmlButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".xml"; // Default file extension
+            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dialog.FileName;
+            }
+        }
+
+
+
+
+
+        private void saveButtonClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".xml"; // Default file extension
+            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+
+            // Show save file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dialog.FileName;
+            }
+        }
+
+
+
     }
 
     //Toivottavasti putki on päällä
