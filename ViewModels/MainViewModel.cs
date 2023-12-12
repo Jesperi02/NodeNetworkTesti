@@ -66,6 +66,8 @@ namespace NodeNetworkTesti.ViewModels
             };
                     //kommentti
                     //testi kommentti
+                    //testi jea
+
             output.ResultInput.ValueChanged
                 .Select(v => (NetworkViewModel.LatestValidation?.IsValid ?? true) ? v.ToString() : "Error")
                 .BindTo(this, vm => vm.ValueLabel);
