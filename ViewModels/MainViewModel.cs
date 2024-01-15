@@ -42,6 +42,7 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new ProductNodeViewModel());
             ListViewModel.AddNodeType(() => new DivisionNodeViewModel());
             ListViewModel.AddNodeType(() => new ConstantNodeViewModel());
+            ListViewModel.AddNodeType(() => new TestiNodeViewModel());
 
             OutputNodeViewModel output = new OutputNodeViewModel();
             NetworkViewModel.Nodes.Add(output);
