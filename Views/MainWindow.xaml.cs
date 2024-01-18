@@ -21,6 +21,7 @@ using NodeNetworkTesti.ViewModels;
 using NodeNetwork.Toolkit.Layout.ForceDirected;
 using NodeNetwork.ViewModels;
 using System.Security.Cryptography.X509Certificates;
+using NodeNetworkTesti.ViewModels.Nodes;
 
 namespace NodeNetworkTesti.Views
 {
@@ -110,9 +111,12 @@ namespace NodeNetworkTesti.Views
             }
         }
 
+       
+}
 
 
-    }
+
+
+}
 
    
-}
