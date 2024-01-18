@@ -42,6 +42,7 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new ProductNodeViewModel());
             ListViewModel.AddNodeType(() => new DivisionNodeViewModel());
             ListViewModel.AddNodeType(() => new ConstantNodeViewModel());
+            ListViewModel.AddNodeType(() => new TestiNodeViewModel());
 
             OutputNodeViewModel output = new OutputNodeViewModel();
             NetworkViewModel.Nodes.Add(output);
@@ -64,8 +65,7 @@ namespace NodeNetworkTesti.ViewModels
 
                 return new NetworkValidationResult(true, true, null);
             };
-                    //kommentti
-                    //testi kommentti
+                    
             output.ResultInput.ValueChanged
                 .Select(v => (NetworkViewModel.LatestValidation?.IsValid ?? true) ? v.ToString() : "Error")
                 .BindTo(this, vm => vm.ValueLabel);
