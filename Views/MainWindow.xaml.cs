@@ -18,6 +18,9 @@ using System.Reactive.Disposables;
 using System.Windows;
 using ReactiveUI;
 using NodeNetworkTesti.ViewModels;
+using NodeNetwork.Toolkit.Layout.ForceDirected;
+using NodeNetwork.ViewModels;
+using System.Security.Cryptography.X509Certificates;
 
 namespace NodeNetworkTesti.Views
 {
@@ -42,6 +45,16 @@ namespace NodeNetworkTesti.Views
             set => ViewModel = (MainViewModel)value;
         }
         #endregion
+
+        void autoLayout(object sender, RoutedEventArgs e)
+        {
+            ForceDirectedLayouter layouter = new ForceDirectedLayouter();
+            var config = new Configuration
+            {
+                Network = ViewModel.NetworkViewModel,
+            };
+            layouter.Layout(config, 10000);
+        }
 
         public MainWindow()
         {
