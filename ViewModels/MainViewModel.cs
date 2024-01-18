@@ -13,6 +13,8 @@ using NodeNetwork.Toolkit.NodeList;
 using NodeNetwork.ViewModels;
 using NodeNetworkTesti;
 using ReactiveUI;
+using NodeNetwork.Toolkit.Layout.ForceDirected;
+using System.Windows;
 
 namespace NodeNetworkTesti.ViewModels
 {
@@ -44,7 +46,10 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new ConstantNodeViewModel());
 
             OutputNodeViewModel output = new OutputNodeViewModel();
+            OutputNodeViewModel output2 = new OutputNodeViewModel();
+
             NetworkViewModel.Nodes.Add(output);
+            NetworkViewModel.Nodes.Add(output2);
 
             NetworkViewModel.Validator = network =>
             {

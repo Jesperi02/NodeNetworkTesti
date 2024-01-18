@@ -15,7 +15,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <nodeList:NodeListView Grid.Column="0" x:Name="nodeList" HorizontalAlignment="Stretch"/>
+        <Grid Grid.Column="0">
+            <nodeList:NodeListView x:Name="nodeList" HorizontalAlignment="Stretch"/>
+            <Button x:Name="autoLayoutButton"
+                    Width="150px"
+                    Height="30px"
+                    VerticalAlignment="Bottom"
+                    Margin="50"
+                    Click="autoLayout">Auto Layout</Button>
+        </Grid>
+        
         <GridSplitter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="5"/>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
