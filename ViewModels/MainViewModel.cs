@@ -48,7 +48,7 @@ namespace NodeNetworkTesti.ViewModels
 
             OutputNodeViewModel output = new OutputNodeViewModel();
             OutputNodeViewModel output2 = new OutputNodeViewModel();
-
+            
             NetworkViewModel.Nodes.Add(output);
             NetworkViewModel.Nodes.Add(output2);
 

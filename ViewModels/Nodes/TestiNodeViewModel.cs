@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DynamicData;
+using System.Security.Cryptography.X509Certificates;
 
 namespace NodeNetworkTesti.ViewModels.Nodes
 {
@@ -34,7 +34,19 @@ namespace NodeNetworkTesti.ViewModels.Nodes
                 Editor = ValueEditor,
                 Value = this.WhenAnyValue(vm => vm.ValueEditor.Value)
             };
+
             this.Outputs.Add(Output);
+
+            void SetValue(int val)
+            {
+                ValueEditor.SetValue(val);
+            }
+
+            void addConnection(NetworkViewModel NVM, TestiNodeViewModel node)
+            {
+                //NodeInputViewModel con1 = this.Outputs.Items
+                //ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(this, node);
+            }
         }
     }
 }

@@ -15,5 +15,10 @@ namespace NodeNetworkTesti.ViewModels
         {
             Value = 0;
         }
+
+        public void SetValue(int? value)
+        {
+            Value = value;
+        }
     }
 }
