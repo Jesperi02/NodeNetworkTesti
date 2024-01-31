@@ -45,6 +45,8 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new DivisionNodeViewModel());
             ListViewModel.AddNodeType(() => new ConstantNodeViewModel());
             ListViewModel.AddNodeType(() => new TestiNodeViewModel());
+            ListViewModel.AddNodeType(() => new ADA16NodeViewModel());
+            ListViewModel.AddNodeType(() => new ADA16ReceiveNodeViewModel());
 
             OutputNodeViewModel output = new OutputNodeViewModel();
             OutputNodeViewModel output2 = new OutputNodeViewModel();
@@ -70,10 +72,16 @@ namespace NodeNetworkTesti.ViewModels
 
                 return new NetworkValidationResult(true, true, null);
             };
-                    
+
             output.ResultInput.ValueChanged
                 .Select(v => (NetworkViewModel.LatestValidation?.IsValid ?? true) ? v.ToString() : "Error")
                 .BindTo(this, vm => vm.ValueLabel);
+
+
+            
+
+
+
         }
     }
 }
