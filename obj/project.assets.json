@@ -2324,19 +2324,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nikos\\.nuget\\packages\\": {}
+    "C:\\Users\\jerev\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\KoodiKoulu\\projektikurssi\\NodeNetworkTesti\\NodeNetworkTesti.csproj",
+      "projectUniqueName": "C:\\Users\\jerev\\OneDrive - LUT University\\Projektityö1\\NodeNetworkTesti\\NodeNetworkTesti.csproj",
       "projectName": "NodeNetworkTesti",
-      "projectPath": "C:\\KoodiKoulu\\projektikurssi\\NodeNetworkTesti\\NodeNetworkTesti.csproj",
-      "packagesPath": "C:\\Users\\nikos\\.nuget\\packages\\",
-      "outputPath": "C:\\KoodiKoulu\\projektikurssi\\NodeNetworkTesti\\obj\\",
+      "projectPath": "C:\\Users\\jerev\\OneDrive - LUT University\\Projektityö1\\NodeNetworkTesti\\NodeNetworkTesti.csproj",
+      "packagesPath": "C:\\Users\\jerev\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jerev\\OneDrive - LUT University\\Projektityö1\\NodeNetworkTesti\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nikos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jerev\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2394,7 +2394,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
