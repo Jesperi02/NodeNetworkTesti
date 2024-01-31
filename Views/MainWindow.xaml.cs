@@ -22,6 +22,9 @@ using NodeNetwork.Toolkit.Layout.ForceDirected;
 using NodeNetwork.ViewModels;
 using System.Security.Cryptography.X509Certificates;
 using NodeNetworkTesti.ViewModels.Nodes;
+using System.Xml.Linq;
+using System.Diagnostics;
+using DynamicData;
 
 namespace NodeNetworkTesti.Views
 {
@@ -54,7 +57,7 @@ namespace NodeNetworkTesti.Views
             {
                 Network = ViewModel.NetworkViewModel,
             };
-            layouter.Layout(config, 10000);
+            layouter.Layout(config, 100);
         }
 
         public MainWindow()
@@ -86,7 +89,38 @@ namespace NodeNetworkTesti.Views
             {
                 // Open document
                 string filename = dialog.FileName;
+
+                XDocument doc = XDocument.Load(filename);
+                List<XElement> ioElements = doc.Descendants("IO").ToList();
+
+                foreach (XElement io in ioElements)
+                {
+                    // Do something with each IO element
+                    //Debug.WriteLine(io);
+
+
+
+                    string inputName = io.Element("GUI-NAME").Value;
+                    string outputName = io.Element("MEM-TYPE").Value;
+                    string outputValue = io.Element("VALUE").Value;
+
+
+
+                    IoNodeViewModel ioModel = new IoNodeViewModel();
+                    ioModel.Input1.Name = inputName;
+                    ioModel.Output.Name = outputName;
+                   // ioModel.Output.Value = outputValue;
+                    ViewModel.NetworkViewModel.Nodes.Add(ioModel);
+
+
+
+                }
+
             }
+
+
+
+
         }
 
 
