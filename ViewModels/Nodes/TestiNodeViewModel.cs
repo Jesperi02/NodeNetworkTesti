@@ -154,7 +154,8 @@ namespace NodeNetworkTesti.ViewModels.Nodes
 
             void SetValue(int val)
             {
-                ValueEditor.SetValue(val);
+                //Tässä oli jeren muutkosia!!!!!!
+                //ValueEditor.SetValue(val);
             }
 
             void addConnection(NetworkViewModel NVM, TestiNodeViewModel node)
