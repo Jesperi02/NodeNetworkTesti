@@ -4,21 +4,16 @@
 winexe
 C#
 .cs
-C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\obj\Debug\net6.0-windows\
-NodeNetworkTesti_m0zpk0tz_wpftmp
+C:\Users\jerev\OneDrive - LUT University\Projektityö1\NodeNetworkTesti\obj\Debug\net6.0-windows\
+NodeNetworkTesti
 none
 false
-TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\App.xaml
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\jerev\OneDrive - LUT University\Projektityö1\NodeNetworkTesti\App.xaml
 2-1540878389
 
-<<<<<<< HEAD
-131204037093
+1634230510
 219139788749
-=======
-191910998616
-4381580949430
->>>>>>> origin/Niko
 Views\IntegerValueEditorView.xaml;Views\MainWindow.xaml;
 
 True
