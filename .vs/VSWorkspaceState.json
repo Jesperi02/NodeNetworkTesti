@@ -5,6 +5,6 @@
     "\\ViewModels\\Nodes",
     "\\Views"
   ],
-  "SelectedNode": "\\NodeNetworkTesti.sln",
+  "SelectedNode": "\\ViewModels\\Nodes\\TestiNodeViewModel.cs",
   "PreviewInSolutionExplorer": false
 }

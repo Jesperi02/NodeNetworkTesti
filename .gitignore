@@ -304,3 +304,8 @@ _site/
 
 !/ExampleShaderEditorApp/Resources/Models/*.obj
 NuGet/nuget.exe
+
+.vs/NodeNetworkTesti/DesignTimeBuild/
+.vs/NodeNetworkTesti/v17/
+.vs/NodeNetworkTesti/FileContentIndex/
+.vs/ProjectEvaluation/

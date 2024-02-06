@@ -5,15 +5,15 @@ winexe
 C#
 .cs
 C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\obj\Debug\net6.0-windows\
-NodeNetworkTesti_som0d30j_wpftmp
+NodeNetworkTesti
 none
 false
-TRACE;RELEASE;NET;NET6_0;NETCOREAPP
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\App.xaml
 2-1540878389
 
-191910998616
-4381580949430
+1634230510
+219-1357008933
 Views\IntegerValueEditorView.xaml;Views\MainWindow.xaml;
 
 True
