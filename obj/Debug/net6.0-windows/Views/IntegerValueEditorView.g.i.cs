@@ -79,7 +79,7 @@ namespace NodeNetworkTesti.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/NodeNetworkTesti;V1.0.0.0;component/views/integervalueeditorview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/NodeNetworkTesti;component/views/integervalueeditorview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\IntegerValueEditorView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
