@@ -103,12 +103,19 @@ namespace NodeNetworkTesti.Views
                     string inputName = io.Element("GUI-NAME").Value;
                     string outputName = io.Element("MEM-TYPE").Value;
                     string outputValue = io.Element("VALUE").Value;
+                    string inputValue = io.Element("VALUE").Value;
+                    int inputValueInt = 0;
 
+                    if (inputValue.Length > 0)
+                    {
+                        inputValueInt = int.Parse(inputValue);
+                    }
 
 
                     IoNodeViewModel ioModel = new IoNodeViewModel();
                     ioModel.Input1.Name = inputName;
                     ioModel.Output.Name = outputName;
+                    ioModel.ValueEditor.SetValue(inputValueInt);
                    // ioModel.Output.Value = outputValue;
                     ViewModel.NetworkViewModel.Nodes.Add(ioModel);
 

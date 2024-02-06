@@ -31,7 +31,7 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             Input1 = new ValueNodeInputViewModel<int?>
             {
                 Name = "INPUTNAME",
-                Editor = new IntegerValueEditorViewModel()
+                Editor = ValueEditor
 
             };
             Inputs.Add(Input1);
@@ -45,6 +45,12 @@ namespace NodeNetworkTesti.ViewModels.Nodes
                 Value = this.WhenAnyValue(vm => vm.ValueEditor.Value),
             };
             Outputs.Add(Output);
+
+
+            void SetValue(int pos, int val)
+            {
+                ValueEditor.SetValue(val);
+            }
         }
     }
 }
