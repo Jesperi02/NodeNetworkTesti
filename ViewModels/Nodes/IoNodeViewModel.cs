@@ -46,11 +46,12 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             };
             Outputs.Add(Output);
 
-
-            void SetValue(int pos, int val)
-            {
-                ValueEditor.SetValue(val);
-            }
         }
+
+        void SetValue(int pos, int val)
+        {
+            ValueEditor.SetValue(val);
+        }
+        
     }
 }

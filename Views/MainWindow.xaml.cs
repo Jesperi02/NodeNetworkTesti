@@ -25,6 +25,7 @@ using NodeNetworkTesti.ViewModels.Nodes;
 using System.Xml.Linq;
 using System.Diagnostics;
 using DynamicData;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace NodeNetworkTesti.Views
 {
@@ -74,7 +75,7 @@ namespace NodeNetworkTesti.Views
             });
         }
 
-        private void xmlButtonClick(object sender, RoutedEventArgs e)
+        private void openButtonClick(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
@@ -135,21 +136,61 @@ namespace NodeNetworkTesti.Views
 
 
         private void saveButtonClick(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Document"; // Default file name
-            dialog.DefaultExt = ".xml"; // Default file extension
-            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+        { 
+             var dialog = new Microsoft.Win32.SaveFileDialog();
+             dialog.FileName = "Document"; // Default file name
+             dialog.DefaultExt = ".xml"; // Default file extension
+             dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
 
-            // Show save file dialog box
-            bool? result = dialog.ShowDialog();
+             // Show save file dialog box
+             bool? result = dialog.ShowDialog();
 
-            // Process save file dialog box results
-            if (result == true)
-            {
+            
+             // Process save file dialog box results
+             if (result == true)
+             {
                 // Save document
                 string filename = dialog.FileName;
+
+                XDocument doc = new XDocument();
+                XElement root = new XElement("Root");
+
+                foreach (NodeViewModel node in ViewModel.NetworkViewModel.Nodes.Items)
+                {
+                    XElement nodeElement = new XElement("Node",
+                        new XElement("InputName", node.Input1.Name),
+                        new XElement("OutputName", node.Output.Name),
+                        new XElement("InputValue", node.ValueEditor.GetValue()),
+                        new XElement("OutputValue", node.Output.Value)
+                    );
+
+                    root.Add(nodeElement);
+                }
+
+                doc.Add(root);
+                doc.Save(filename);
+
+
+
+
+                /*
+                foreach (NodeViewModel node in ViewModel.NetworkViewModel.Nodes.Items)
+                {
+                    
+                }
+                */
+
+
             }
+            
+
+            
+
+
+            
+
+
+
         }
 
        

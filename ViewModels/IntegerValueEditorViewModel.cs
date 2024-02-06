@@ -20,5 +20,11 @@ namespace NodeNetworkTesti.ViewModels
         {
             Value = value;
         }
+
+        public int? ReadValue()
+        {
+
+            return Value;
+        }
     }
 }
