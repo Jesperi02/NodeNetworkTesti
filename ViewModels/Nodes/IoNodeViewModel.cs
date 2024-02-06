@@ -45,12 +45,20 @@ namespace NodeNetworkTesti.ViewModels.Nodes
                 Value = this.WhenAnyValue(vm => vm.ValueEditor.Value),
             };
             Outputs.Add(Output);
+        }
 
+        public void SetValue(int pos, int val)
+        {
+            ValueEditor.SetValue(val);
+        }
 
-            void SetValue(int pos, int val)
-            {
-                ValueEditor.SetValue(val);
-            }
+        public void addConnection(NetworkViewModel NVM, IoNodeViewModel node)
+        {
+            NodeOutputViewModel con1 = Output;
+            NodeInputViewModel con2 = node.Input1;
+
+            ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(con2, con1);
+            NVM.Connections.Add(newConnection);
         }
     }
 }

@@ -48,11 +48,13 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new ADA16NodeViewModel());
             ListViewModel.AddNodeType(() => new ADA16ReceiveNodeViewModel());
 
-            OutputNodeViewModel output = new OutputNodeViewModel();
-            OutputNodeViewModel output2 = new OutputNodeViewModel();
+            IoNodeViewModel test1 = new IoNodeViewModel();
+            IoNodeViewModel test2 = new IoNodeViewModel();
             
-            NetworkViewModel.Nodes.Add(output);
-            NetworkViewModel.Nodes.Add(output2);
+            NetworkViewModel.Nodes.Add(test1);
+            NetworkViewModel.Nodes.Add(test2);
+
+            test1.addConnection(NetworkViewModel, test2);
 
             NetworkViewModel.Validator = network =>
             {
@@ -62,7 +64,7 @@ namespace NodeNetworkTesti.ViewModels
                     return new NetworkValidationResult(false, false, new ErrorMessageViewModel("Network contains loops!"));
                 }
 
-                bool containsDivisionByZero = GraphAlgorithms.GetConnectedNodesBubbling(output)
+                bool containsDivisionByZero = GraphAlgorithms.GetConnectedNodesBubbling(test1)
                     .OfType<DivisionNodeViewModel>()
                     .Any(n => n.Input2.Value == 0);
                 if (containsDivisionByZero)
@@ -73,9 +75,7 @@ namespace NodeNetworkTesti.ViewModels
                 return new NetworkValidationResult(true, true, null);
             };
 
-            output.ResultInput.ValueChanged
-                .Select(v => (NetworkViewModel.LatestValidation?.IsValid ?? true) ? v.ToString() : "Error")
-                .BindTo(this, vm => vm.ValueLabel);
+           
 
 
             
