@@ -26,6 +26,8 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using DynamicData;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Xml;
+using System.Windows.Markup;
 
 namespace NodeNetworkTesti.Views
 {
@@ -145,56 +147,59 @@ namespace NodeNetworkTesti.Views
              // Show save file dialog box
              bool? result = dialog.ShowDialog();
 
-            
+            //TÄMÄ TALLENTAA VALUE TAGIIN UUDEN ARVON
+            /* 
              // Process save file dialog box results
              if (result == true)
              {
                 // Save document
                 string filename = dialog.FileName;
+                string xmlFilePath = filename;
 
-                XDocument doc = new XDocument();
-                XElement root = new XElement("Root");
+                XDocument doc = XDocument.Load(xmlFilePath);
 
-                foreach (NodeViewModel node in ViewModel.NetworkViewModel.Nodes.Items)
+                // Replace tag value
+                foreach (var valueElement in doc.Descendants("VALUE"))
                 {
-                    XElement nodeElement = new XElement("Node",
-                        new XElement("InputName", node.Input1.Name),
-                        new XElement("OutputName", node.Output.Name),
-                        new XElement("InputValue", node.ValueEditor.GetValue()),
-                        new XElement("OutputValue", node.Output.Value)
-                    );
-
-                    root.Add(nodeElement);
+                    if (valueElement != null)
+                    {
+                        valueElement.Value = "234324";
+                    }
                 }
 
-                doc.Add(root);
+                doc.Save(xmlFilePath);
+            */
+
+            //TÄMÄ TEKEE UUDEN XML TIEDOSTON
+            if (result == true)
+            {
+                // Save document
+                string filename = dialog.FileName;
+
+                // Create a new XDocument with root element
+                XDocument doc = new XDocument(new XElement("Root"));
+
+                // Add an example VALUE element
+                doc.Root.Add(new XElement("VALUE", "234324"));
+
+                // Save the new XML document
                 doc.Save(filename);
-
-
-
-
-                /*
-                foreach (NodeViewModel node in ViewModel.NetworkViewModel.Nodes.Items)
-                {
-                    
-                }
-                */
-
-
             }
-            
-
-            
-
-
-            
-
-
 
         }
 
+
+
+
+
+
+
+
+
+        
+
        
-}
+    }
 
 
 
