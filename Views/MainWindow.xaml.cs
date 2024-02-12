@@ -28,6 +28,7 @@ using DynamicData;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Xml;
 using System.Windows.Markup;
+using NodeNetwork.Toolkit.ValueNode;
 
 namespace NodeNetworkTesti.Views
 {
@@ -103,25 +104,52 @@ namespace NodeNetworkTesti.Views
 
 
 
-                    string nodeName = function.Element("GUI-NAME").Value;
-                    string ioTagGuiName = function.Descendants("GUI-NAME").FirstOrDefault()?.Value; // ETSI TÄHÄN IO KORTIN GUINAME EI FUNCTION GUI NAME
+                    string nodeName = function.Element("GUI-NAME").Value; //FUNCTION GUI-NAME
+                    string ioTagGuiName = function.Element("IOS").Descendants("IO").Descendants("GUI-NAME").FirstOrDefault()?.Value; //  IO KORTIN GUINAME 
+                    string ioTagValue = function.Element("IOS").Descendants("IO").Descendants("VALUE").FirstOrDefault()?.Value; // IO KORTIN VALUE
                     //string outputName = function.Element("MEM-TYPE").Value;
                     //string outputValue = function.Element("VALUE").Value;
-                    //string inputValue = function.Element("VALUE").Value;
+                    
                     int inputValueInt = 0;
 
-                   /* if (inputValue.Length > 0)
+                    if (ioTagValue.Length > 0)
                     {
-                        inputValueInt = int.Parse(inputValue);
+                        inputValueInt = int.Parse(ioTagValue);
                     }
-                   */
+                   
 
-                    IoNodeViewModel functionModel = new IoNodeViewModel();
+                    IoNodeViewModel functionModel = new IoNodeViewModel(); 
                     functionModel.Name = nodeName;
+                    functionModel.AddInput(ioTagGuiName, inputValueInt);
+
+                    
+                    //UUTTA
+                    /* var input = new ValueNodeInputViewModel<int?>
+                     {
+                         Name = ioTagGuiName,
+                         Editor = functionModel.ValueEditor
+
+                     };
+                    */
+                    // Debug.WriteLine(input.Name);
+
+
+                    //functionModel.AddInput(ioTagGuiName, inputValueInt);
+
+
+                    // Set value for the input
+                    // functionModel.SetValue(0, inputValueInt);
+
+
+                    // UUTTA
+
+
+                    /*
+
                     functionModel.Input1.Name = ioTagGuiName;
-                    //functionModel.Output.Name = outputName;
                     functionModel.ValueEditor.SetValue(inputValueInt);
-                   // ioModel.Output.Value = outputValue;
+                    //functionModel.Output.Name = outputName;
+                    */
                     ViewModel.NetworkViewModel.Nodes.Add(functionModel);
 
 
