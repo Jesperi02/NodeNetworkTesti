@@ -82,7 +82,7 @@ namespace NodeNetworkTesti.Views
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".xml"; // Default file extension
-            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+            dialog.Filter = "XML files (.xml)|*.xml|APG files (.apg)|*.apg|All files (*.*)|*.*"; // Filter files by extension
 
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
@@ -94,33 +94,35 @@ namespace NodeNetworkTesti.Views
                 string filename = dialog.FileName;
 
                 XDocument doc = XDocument.Load(filename);
-                List<XElement> ioElements = doc.Descendants("IO").ToList();
+                List<XElement> functionElements = doc.Descendants("FUNCTION").ToList();
 
-                foreach (XElement io in ioElements)
+                foreach (XElement function in functionElements)
                 {
                     // Do something with each IO element
                     //Debug.WriteLine(io);
 
 
 
-                    string inputName = io.Element("GUI-NAME").Value;
-                    string outputName = io.Element("MEM-TYPE").Value;
-                    string outputValue = io.Element("VALUE").Value;
-                    string inputValue = io.Element("VALUE").Value;
+                    string nodeName = function.Element("GUI-NAME").Value;
+                    string ioTagGuiName = function.Descendants("GUI-NAME").FirstOrDefault()?.Value; // ETSI TÄHÄN IO KORTIN GUINAME EI FUNCTION GUI NAME
+                    //string outputName = function.Element("MEM-TYPE").Value;
+                    //string outputValue = function.Element("VALUE").Value;
+                    //string inputValue = function.Element("VALUE").Value;
                     int inputValueInt = 0;
 
-                    if (inputValue.Length > 0)
+                   /* if (inputValue.Length > 0)
                     {
                         inputValueInt = int.Parse(inputValue);
                     }
+                   */
 
-
-                    IoNodeViewModel ioModel = new IoNodeViewModel();
-                    ioModel.Input1.Name = inputName;
-                    ioModel.Output.Name = outputName;
-                    ioModel.ValueEditor.SetValue(inputValueInt);
+                    IoNodeViewModel functionModel = new IoNodeViewModel();
+                    functionModel.Name = nodeName;
+                    functionModel.Input1.Name = ioTagGuiName;
+                    //functionModel.Output.Name = outputName;
+                    functionModel.ValueEditor.SetValue(inputValueInt);
                    // ioModel.Output.Value = outputValue;
-                    ViewModel.NetworkViewModel.Nodes.Add(ioModel);
+                    ViewModel.NetworkViewModel.Nodes.Add(functionModel);
 
 
 
