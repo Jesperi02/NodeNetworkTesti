@@ -115,7 +115,8 @@ namespace NodeNetworkTesti.Views
                     IoNodeViewModel ioModel = new IoNodeViewModel();
                     ioModel.Input1.Name = inputName;
                     ioModel.Output.Name = outputName;
-                    ioModel.ValueEditor.SetValue(inputValueInt);
+                    //ioModel.ValueEditor.SetValue(inputValueInt);
+                    ioModel.SetValue(0, inputValueInt);
                    // ioModel.Output.Value = outputValue;
                     ViewModel.NetworkViewModel.Nodes.Add(ioModel);
 

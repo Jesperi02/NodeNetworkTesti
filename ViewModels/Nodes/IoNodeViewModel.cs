@@ -26,7 +26,7 @@ namespace NodeNetworkTesti.ViewModels.Nodes
 
         public IoNodeViewModel()
         {
-            Name = "Io";
+            Name = "IO";
 
             Input1 = new ValueNodeInputViewModel<int?>
             {
