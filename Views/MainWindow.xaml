@@ -37,8 +37,8 @@
                 <Label x:Name="valueLabel" FontSize="16"/>
             </StackPanel>
         </Grid>
-        <Button Content="XML MENU" HorizontalAlignment="Left" Margin="103,12,0,0" VerticalAlignment="Top" Height="20" Width="56" FontSize="10" Click="xmlButtonClick"/>
-        <Button Content="SAVE MENU" HorizontalAlignment="Left" Margin="164,12,0,0" VerticalAlignment="Top" Height="20" Width="58" FontSize="10" Click="saveButtonClick"/>
+        <Button Content="Open file" HorizontalAlignment="Left" Margin="103,12,0,0" VerticalAlignment="Top" Height="20" Width="56" FontSize="10" Click="openButtonClick"/>
+        <Button Content="Save file" HorizontalAlignment="Left" Margin="164,12,0,0" VerticalAlignment="Top" Height="20" Width="58" FontSize="10" Click="saveButtonClick"/>
 
 
     </Grid>

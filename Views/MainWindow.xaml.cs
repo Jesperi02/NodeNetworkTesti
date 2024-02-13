@@ -25,6 +25,11 @@ using NodeNetworkTesti.ViewModels.Nodes;
 using System.Xml.Linq;
 using System.Diagnostics;
 using DynamicData;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Xml;
+using System.Windows.Markup;
+using NodeNetwork.Toolkit.ValueNode;
+using Xceed.Wpf.Toolkit.Primitives;
 
 namespace NodeNetworkTesti.Views
 {
@@ -57,7 +62,7 @@ namespace NodeNetworkTesti.Views
             {
                 Network = ViewModel.NetworkViewModel,
             };
-            layouter.Layout(config, 100);
+            layouter.Layout(config, 300);
         }
 
         public MainWindow()
@@ -74,12 +79,12 @@ namespace NodeNetworkTesti.Views
             });
         }
 
-        private void xmlButtonClick(object sender, RoutedEventArgs e)
+        private void openButtonClick(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".xml"; // Default file extension
-            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+            dialog.Filter = "XML files (.xml)|*.xml|APG files (.apg)|*.apg|All files (*.*)|*.*"; // Filter files by extension
 
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
@@ -91,33 +96,51 @@ namespace NodeNetworkTesti.Views
                 string filename = dialog.FileName;
 
                 XDocument doc = XDocument.Load(filename);
-                List<XElement> ioElements = doc.Descendants("IO").ToList();
-
-                foreach (XElement io in ioElements)
+                List<XElement> functionElements = doc.Descendants("FUNCTION").ToList();
+                
+                foreach (XElement function in functionElements)
                 {
-                    // Do something with each IO element
-                    //Debug.WriteLine(io);
+                    // Tee juttuja functioneilla
+                    
 
 
 
-                    string inputName = io.Element("GUI-NAME").Value;
-                    string outputName = io.Element("MEM-TYPE").Value;
-                    string outputValue = io.Element("VALUE").Value;
-                    string inputValue = io.Element("VALUE").Value;
+                    string nodeName = function.Element("GUI-NAME").Value; //FUNCTION GUI-NAME
+                    string ioTagGuiName = function.Element("IOS").Descendants("IO").Descendants("GUI-NAME").FirstOrDefault()?.Value; //  IO KORTIN GUINAME 
+                    string ioTagValue = function.Element("IOS").Descendants("IO").Descendants("VALUE").FirstOrDefault()?.Value; // IO KORTIN VALUE
+                    
+                    
                     int inputValueInt = 0;
 
-                    if (inputValue.Length > 0)
+                    if (ioTagValue.Length > 0)
                     {
-                        inputValueInt = int.Parse(inputValue);
+                        inputValueInt = int.Parse(ioTagValue);
                     }
+                   
 
+                    IoNodeViewModel functionModel = new IoNodeViewModel(); 
+                    functionModel.Name = nodeName;
 
-                    IoNodeViewModel ioModel = new IoNodeViewModel();
-                    ioModel.Input1.Name = inputName;
-                    ioModel.Output.Name = outputName;
-                    ioModel.ValueEditor.SetValue(inputValueInt);
-                   // ioModel.Output.Value = outputValue;
-                    ViewModel.NetworkViewModel.Nodes.Add(ioModel);
+                    List<XElement> ioElements = function.Descendants("IO").ToList();
+                    foreach (XElement io in ioElements) {
+                        // tee juttuja ioilla
+                        
+                        string ioNimi = io.Element("GUI-NAME").Value;
+                        string ioValue = io.Element("VALUE").Value;
+                        Debug.WriteLine("IOVALUE"+ioValue);
+                        int ioIntti = 0;
+
+                        if (ioValue.Length > 0)
+                        {
+                            ioIntti = int.Parse(ioValue);
+                        }
+                        Debug.WriteLine("IOINTTI" + ioIntti);
+
+                        functionModel.addInput(ioNimi, ioIntti);
+                    }
+                    
+                    
+                    ViewModel.NetworkViewModel.Nodes.Add(functionModel);
 
 
 
@@ -135,25 +158,68 @@ namespace NodeNetworkTesti.Views
 
 
         private void saveButtonClick(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Document"; // Default file name
-            dialog.DefaultExt = ".xml"; // Default file extension
-            dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+        { 
+             var dialog = new Microsoft.Win32.SaveFileDialog();
+             dialog.FileName = "Document"; // Default file name
+             dialog.DefaultExt = ".xml"; // Default file extension
+             dialog.Filter = "XML files (.xml)|*.xml|APG files (.apg)|*.apg|All files (*.*)|*.*"; // Filter files by extension
 
             // Show save file dialog box
             bool? result = dialog.ShowDialog();
 
-            // Process save file dialog box results
+            //TÄMÄ TALLENTAA VALUE TAGIIN UUDEN ARVON
+            /* 
+             // Process save file dialog box results
+             if (result == true)
+             {
+                // Save document
+                string filename = dialog.FileName;
+                string xmlFilePath = filename;
+
+                XDocument doc = XDocument.Load(xmlFilePath);
+
+                // Replace tag value
+                foreach (var valueElement in doc.Descendants("VALUE"))
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Value = "234324";
+                    }
+                }
+
+                doc.Save(xmlFilePath);
+            */
+
+            //TÄMÄ TEKEE UUDEN XML TIEDOSTON
             if (result == true)
             {
                 // Save document
                 string filename = dialog.FileName;
+
+                // Create a new XDocument with root element
+                XDocument doc = new XDocument(new XElement("Root"));
+
+                // Add an example VALUE element
+                doc.Root.Add(new XElement("VALUE", "234324"));
+
+                // Save the new XML document
+                doc.Save(filename);
             }
+
         }
 
+
+
+
+
+
+
+
+
+        
+
        
-}
+    }
 
 
 

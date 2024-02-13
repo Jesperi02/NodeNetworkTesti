@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\jerev\OneDrive - LUT University\Projektityö1\NodeNetworkTesti\obj\Debug\net6.0-windows\
-NodeNetworkTesti
+C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\obj\Debug\net6.0-windows\
+NodeNetworkTesti_jzkhziag_wpftmp
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\jerev\OneDrive - LUT University\Projektityö1\NodeNetworkTesti\App.xaml
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP
+C:\KoodiKoulu\projektikurssi\NodeNetworkTesti\App.xaml
 2-1540878389
 
-1634230510
-219139788749
+191910998616
+4381580949430
 Views\IntegerValueEditorView.xaml;Views\MainWindow.xaml;
 
-False
+True
 
