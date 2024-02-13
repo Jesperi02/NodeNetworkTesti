@@ -29,6 +29,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Xml;
 using System.Windows.Markup;
 using NodeNetwork.Toolkit.ValueNode;
+using Xceed.Wpf.Toolkit.Primitives;
 
 namespace NodeNetworkTesti.Views
 {
@@ -61,7 +62,7 @@ namespace NodeNetworkTesti.Views
             {
                 Network = ViewModel.NetworkViewModel,
             };
-            layouter.Layout(config, 100);
+            layouter.Layout(config, 300);
         }
 
         public MainWindow()
@@ -96,19 +97,18 @@ namespace NodeNetworkTesti.Views
 
                 XDocument doc = XDocument.Load(filename);
                 List<XElement> functionElements = doc.Descendants("FUNCTION").ToList();
-
+                
                 foreach (XElement function in functionElements)
                 {
-                    // Do something with each IO element
-                    //Debug.WriteLine(io);
+                    // Tee juttuja functioneilla
+                    
 
 
 
                     string nodeName = function.Element("GUI-NAME").Value; //FUNCTION GUI-NAME
                     string ioTagGuiName = function.Element("IOS").Descendants("IO").Descendants("GUI-NAME").FirstOrDefault()?.Value; //  IO KORTIN GUINAME 
                     string ioTagValue = function.Element("IOS").Descendants("IO").Descendants("VALUE").FirstOrDefault()?.Value; // IO KORTIN VALUE
-                    //string outputName = function.Element("MEM-TYPE").Value;
-                    //string outputValue = function.Element("VALUE").Value;
+                    
                     
                     int inputValueInt = 0;
 
@@ -120,36 +120,26 @@ namespace NodeNetworkTesti.Views
 
                     IoNodeViewModel functionModel = new IoNodeViewModel(); 
                     functionModel.Name = nodeName;
-                    functionModel.AddInput(ioTagGuiName, inputValueInt);
 
+                    List<XElement> ioElements = function.Descendants("IO").ToList();
+                    foreach (XElement io in ioElements) {
+                        // tee juttuja ioilla
+                        
+                        string ioNimi = io.Element("GUI-NAME").Value;
+                        string ioValue = io.Element("VALUE").Value;
+                        Debug.WriteLine("IOVALUE"+ioValue);
+                        int ioIntti = 0;
+
+                        if (ioValue.Length > 0)
+                        {
+                            ioIntti = int.Parse(ioValue);
+                        }
+                        Debug.WriteLine("IOINTTI" + ioIntti);
+
+                        functionModel.addInput(ioNimi, ioIntti);
+                    }
                     
-                    //UUTTA
-                    /* var input = new ValueNodeInputViewModel<int?>
-                     {
-                         Name = ioTagGuiName,
-                         Editor = functionModel.ValueEditor
-
-                     };
-                    */
-                    // Debug.WriteLine(input.Name);
-
-
-                    //functionModel.AddInput(ioTagGuiName, inputValueInt);
-
-
-                    // Set value for the input
-                    // functionModel.SetValue(0, inputValueInt);
-
-
-                    // UUTTA
-
-
-                    /*
-
-                    functionModel.Input1.Name = ioTagGuiName;
-                    functionModel.ValueEditor.SetValue(inputValueInt);
-                    //functionModel.Output.Name = outputName;
-                    */
+                    
                     ViewModel.NetworkViewModel.Nodes.Add(functionModel);
 
 

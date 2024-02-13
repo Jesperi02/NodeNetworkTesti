@@ -22,12 +22,13 @@ namespace NodeNetworkTesti.ViewModels.Nodes
         {
             Splat.Locator.CurrentMutable.Register(() => new NodeView(), typeof(IViewFor<IoNodeViewModel>));
         }
-        public IntegerValueEditorViewModel ValueEditor { get; } = new IntegerValueEditorViewModel();
+        public IntegerValueEditorViewModel OutputValueEditor { get; } = new IntegerValueEditorViewModel();
+
+        public List<IntegerValueEditorViewModel> inputList { get; } = new List<IntegerValueEditorViewModel>();
 
         public ValueNodeInputViewModel<int?> Input1 { get; }
         public ValueNodeOutputViewModel<int?> Output { get; }
 
-        public List<ValueNodeInputViewModel<int?>> Inputs1 { get; } = new List<ValueNodeInputViewModel<int?>>();
 
        
 
@@ -49,52 +50,32 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             {
                 
                 Name = "OUTPUTNAME",
-                Value = this.WhenAnyValue(vm => vm.ValueEditor.Value),
+                Value = this.WhenAnyValue(vm => vm.OutputValueEditor.Value),
             };
             Outputs.Add(Output);
-
-            foreach (var input in Inputs1)
-            {
-                var input1 = new ValueNodeInputViewModel<int?>
-                {
-                    Name = input.Name,
-                    Editor = new IntegerValueEditorViewModel()
-
-                };
-
-                Debug.WriteLine("TESTI" + input.Name + input.Value);
-                Inputs.Add(input);
-
-
-            }
-
-
-        }
-
-        // UUTTA
-        public void AddInput(string inputName,int? inputValue)
-        {
-            var input = new ValueNodeInputViewModel<int?>
-            {
-                Name = inputName,
-                Editor = new IntegerValueEditorViewModel()
-            };
-            
-            ValueEditor.SetValue(inputValue);
-            Inputs.Add(input); // TÄMÄ LISÄÄ VAIN YHDEN NETWORKKIIN
-            Inputs1.Add(input);
-
             
 
-
         }
-        // UUTTA
-
+        
 
         public void SetValue(int pos, int val)
         {
-            ValueEditor.SetValue(val);
+            //ValueEditor.SetValue(val);
         }
         
+        public void addInput(string name, int val)
+        {
+            IntegerValueEditorViewModel ValueEditor = new IntegerValueEditorViewModel();
+            inputList.Add(ValueEditor);
+
+            var input = new ValueNodeInputViewModel<int?>
+            {
+                Name = name,
+                Editor = ValueEditor,
+            };
+
+            ValueEditor.SetValue(val);
+            this.Inputs.Add(input);
+        }
     }
 }
