@@ -162,10 +162,10 @@ namespace NodeNetworkTesti.Views
              var dialog = new Microsoft.Win32.SaveFileDialog();
              dialog.FileName = "Document"; // Default file name
              dialog.DefaultExt = ".xml"; // Default file extension
-             dialog.Filter = "XML files (.xml)|*.xml"; // Filter files by extension
+             dialog.Filter = "XML files (.xml)|*.xml|APG files (.apg)|*.apg|All files (*.*)|*.*"; // Filter files by extension
 
-             // Show save file dialog box
-             bool? result = dialog.ShowDialog();
+            // Show save file dialog box
+            bool? result = dialog.ShowDialog();
 
             //TÄMÄ TALLENTAA VALUE TAGIIN UUDEN ARVON
             /* 
