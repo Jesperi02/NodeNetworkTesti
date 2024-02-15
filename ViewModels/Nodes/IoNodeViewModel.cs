@@ -34,8 +34,8 @@ namespace NodeNetworkTesti.ViewModels.Nodes
 
         public IoNodeViewModel()
         {
-            Name = "Io";
-            /*
+            Name = "IO";
+
             Input1 = new ValueNodeInputViewModel<int?>
             {
                 Name = "INPUTNAME",
@@ -57,11 +57,6 @@ namespace NodeNetworkTesti.ViewModels.Nodes
 
         }
         
-
-        public void SetValue(int pos, int val)
-        {
-            //ValueEditor.SetValue(val);
-        }
         
         public void addInput(string name, int val)
         {
@@ -76,6 +71,20 @@ namespace NodeNetworkTesti.ViewModels.Nodes
 
             ValueEditor.SetValue(val);
             this.Inputs.Add(input);
+        }
+
+        public void SetValue(int pos, int val)
+        {
+            ValueEditor.SetValue(val);
+        }
+
+        public void addConnection(NetworkViewModel NVM, IoNodeViewModel node)
+        {
+            NodeOutputViewModel con1 = Output;
+            NodeInputViewModel con2 = node.Input1;
+
+            ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(con2, con1);
+            NVM.Connections.Add(newConnection);
         }
     }
 }
