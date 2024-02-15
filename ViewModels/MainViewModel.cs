@@ -48,14 +48,6 @@ namespace NodeNetworkTesti.ViewModels
             ListViewModel.AddNodeType(() => new ADA16NodeViewModel());
             ListViewModel.AddNodeType(() => new ADA16ReceiveNodeViewModel());
 
-            IoNodeViewModel test1 = new IoNodeViewModel();
-            IoNodeViewModel test2 = new IoNodeViewModel();
-            
-            NetworkViewModel.Nodes.Add(test1);
-            NetworkViewModel.Nodes.Add(test2);
-
-            test1.addConnection(NetworkViewModel, test2);
-
             NetworkViewModel.Validator = network =>
             {
                 bool containsLoops = GraphAlgorithms.FindLoops(network).Any();
@@ -64,24 +56,8 @@ namespace NodeNetworkTesti.ViewModels
                     return new NetworkValidationResult(false, false, new ErrorMessageViewModel("Network contains loops!"));
                 }
 
-                bool containsDivisionByZero = GraphAlgorithms.GetConnectedNodesBubbling(test1)
-                    .OfType<DivisionNodeViewModel>()
-                    .Any(n => n.Input2.Value == 0);
-                if (containsDivisionByZero)
-                {
-                    return new NetworkValidationResult(false, true, new ErrorMessageViewModel("Network contains division by zero!"));
-                }
-
                 return new NetworkValidationResult(true, true, null);
             };
-
-           
-
-
-            
-
-
-
         }
     }
 }

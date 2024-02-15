@@ -100,11 +100,6 @@ namespace NodeNetworkTesti.Views
                 
                 foreach (XElement function in functionElements)
                 {
-                    // Tee juttuja functioneilla
-                    
-
-
-
                     string nodeName = function.Element("GUI-NAME").Value; //FUNCTION GUI-NAME
                     string ioTagGuiName = function.Element("IOS").Descendants("IO").Descendants("GUI-NAME").FirstOrDefault()?.Value; //  IO KORTIN GUINAME 
                     string ioTagValue = function.Element("IOS").Descendants("IO").Descendants("VALUE").FirstOrDefault()?.Value; // IO KORTIN VALUE
@@ -127,16 +122,48 @@ namespace NodeNetworkTesti.Views
                         
                         string ioNimi = io.Element("GUI-NAME").Value;
                         string ioValue = io.Element("VALUE").Value;
-                        Debug.WriteLine("IOVALUE"+ioValue);
-                        int ioIntti = 0;
+                        string ioPos = io.Element("POS").Value;
+                        string ioMemType = io.Element("MEM-TYPE").Value;
 
+                        int ioValueInt = 0;
                         if (ioValue.Length > 0)
                         {
-                            ioIntti = int.Parse(ioValue);
+                            ioValueInt = int.Parse(ioValue);
                         }
-                        Debug.WriteLine("IOINTTI" + ioIntti);
 
-                        functionModel.addInput(ioNimi, ioIntti);
+                        // Onko määritelty Input / Output
+                        string port = "";
+
+                        if (io.Element("PORT") != null) 
+                        {
+                            port = io.Element("PORT").Value;
+                        }
+                        else // manuaalinen tarkistus
+                        {
+                            if (io == ioElements.Last() && ioMemType == "MI")
+                            {
+                                port = "Out";
+                            }
+                            else
+                            {
+                                port = "In";
+                            }
+
+                            io.Add(
+                                new XElement("PORT", port)
+                            );
+                        }
+
+                        if (port == "In")
+                        {
+                            functionModel.addInput(ioNimi, ioValueInt);
+                        }
+                        else // Output
+                        {
+                            functionModel.addOutput(ioNimi, ioValueInt);
+                        }
+
+                        
                     }
                     
                     

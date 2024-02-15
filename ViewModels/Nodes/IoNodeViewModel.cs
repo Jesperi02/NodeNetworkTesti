@@ -22,66 +22,55 @@ namespace NodeNetworkTesti.ViewModels.Nodes
         {
             Splat.Locator.CurrentMutable.Register(() => new NodeView(), typeof(IViewFor<IoNodeViewModel>));
         }
-        public IntegerValueEditorViewModel OutputValueEditor { get; } = new IntegerValueEditorViewModel();
+        public List<ValueNodeInputViewModel<int?>> inputList { get; } = new List<ValueNodeInputViewModel<int?>>();
 
-        public List<IntegerValueEditorViewModel> inputList { get; } = new List<IntegerValueEditorViewModel>();
-
-        public ValueNodeInputViewModel<int?> Input1 { get; }
-        public ValueNodeOutputViewModel<int?> Output { get; }
-
-
-       
+        public List<ValueNodeOutputViewModel<int?>> outputList { get; } = new List<ValueNodeOutputViewModel<int?>>();
 
         public IoNodeViewModel()
         {
             Name = "IO";
-
-            Input1 = new ValueNodeInputViewModel<int?>
-            {
-                Name = "INPUTNAME",
-                Editor = ValueEditor
-
-            };
-            Inputs.Add(Input1);
-
-            */
-
-            Output = new ValueNodeOutputViewModel<int?>
-            {
-                
-                Name = "OUTPUTNAME",
-                Value = this.WhenAnyValue(vm => vm.OutputValueEditor.Value),
-            };
-            Outputs.Add(Output);
-            
-
         }
         
         
         public void addInput(string name, int val)
         {
-            IntegerValueEditorViewModel ValueEditor = new IntegerValueEditorViewModel();
-            inputList.Add(ValueEditor);
+            IntegerValueEditorViewModel InputValueEditor = new IntegerValueEditorViewModel();
 
-            var input = new ValueNodeInputViewModel<int?>
+            ValueNodeInputViewModel<int?> input = new ValueNodeInputViewModel<int?>
             {
                 Name = name,
-                Editor = ValueEditor,
+                Editor = InputValueEditor,
             };
 
-            ValueEditor.SetValue(val);
+            inputList.Add(input);
+
+            InputValueEditor.SetValue(val);
             this.Inputs.Add(input);
+        }
+
+        public void addOutput(string name, int val)
+        {
+            IntegerValueEditorViewModel OutputValueEditor = new IntegerValueEditorViewModel();
+
+            ValueNodeOutputViewModel<int?> Output = new ValueNodeOutputViewModel<int?>
+            {
+                Name = name,
+                Editor = OutputValueEditor,
+            };
+
+            OutputValueEditor.SetValue(val);
+            this.Outputs.Add(Output);
         }
 
         public void SetValue(int pos, int val)
         {
-            ValueEditor.SetValue(val);
+            //inputList[pos].SetValue(val);
         }
 
-        public void addConnection(NetworkViewModel NVM, IoNodeViewModel node)
+        public void addConnection(NetworkViewModel NVM, IoNodeViewModel node, int outPos, int inPos)
         {
-            NodeOutputViewModel con1 = Output;
-            NodeInputViewModel con2 = node.Input1;
+            NodeOutputViewModel con1 = outputList[outPos];
+            NodeInputViewModel con2 = node.inputList[inPos];
 
             ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(con2, con1);
             NVM.Connections.Add(newConnection);
