@@ -100,10 +100,9 @@ namespace NodeNetworkTesti.Views
                 
                 foreach (XElement function in functionElements)
                 {
-                    string nodeName = function.Element("GUI-NAME").Value; //FUNCTION GUI-NAME
+                    string nodeName = function.Element("GUI-NAME").Value; // FUNCTION GUI-NAME
                     string ioTagGuiName = function.Element("IOS").Descendants("IO").Descendants("GUI-NAME").FirstOrDefault()?.Value; //  IO KORTIN GUINAME 
                     string ioTagValue = function.Element("IOS").Descendants("IO").Descendants("VALUE").FirstOrDefault()?.Value; // IO KORTIN VALUE
-                    
                     
                     int inputValueInt = 0;
 
@@ -124,6 +123,7 @@ namespace NodeNetworkTesti.Views
                         string ioValue = io.Element("VALUE").Value;
                         string ioPos = io.Element("POS").Value;
                         string ioMemType = io.Element("MEM-TYPE").Value;
+                        List<XElement> descendants = io.Descendants().ToList();
 
                         int ioValueInt = 0;
                         if (ioValue.Length > 0)
@@ -156,11 +156,11 @@ namespace NodeNetworkTesti.Views
 
                         if (port == "In")
                         {
-                            functionModel.addInput(ioNimi, ioValueInt);
+                            functionModel.addInput(ioNimi, ioValueInt, descendants);
                         }
                         else // Output
                         {
-                            functionModel.addOutput(ioNimi, ioValueInt);
+                            functionModel.addOutput(ioNimi, ioValueInt, descendants);
                         }
 
                         
@@ -217,6 +217,8 @@ namespace NodeNetworkTesti.Views
                 doc.Save(xmlFilePath);
             */
 
+            List<IoNodeViewModel> nodeList = (List<IoNodeViewModel>) ViewModel.NetworkViewModel.Nodes;
+
             //TÄMÄ TEKEE UUDEN XML TIEDOSTON
             if (result == true)
             {
@@ -228,6 +230,8 @@ namespace NodeNetworkTesti.Views
 
                 // Add an example VALUE element
                 doc.Root.Add(new XElement("VALUE", "234324"));
+
+
 
                 // Save the new XML document
                 doc.Save(filename);

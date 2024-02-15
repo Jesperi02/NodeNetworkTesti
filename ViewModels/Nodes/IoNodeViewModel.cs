@@ -1,4 +1,5 @@
 ﻿using DynamicData;
+using NodeNetwork;
 using NodeNetwork.Toolkit.ValueNode;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
@@ -8,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using System.Xml.Linq;
 using Xceed.Wpf.Toolkit.Primitives;
 
 namespace NodeNetworkTesti.ViewModels.Nodes
@@ -22,44 +25,45 @@ namespace NodeNetworkTesti.ViewModels.Nodes
         {
             Splat.Locator.CurrentMutable.Register(() => new NodeView(), typeof(IViewFor<IoNodeViewModel>));
         }
-        public List<ValueNodeInputViewModel<int?>> inputList { get; } = new List<ValueNodeInputViewModel<int?>>();
-
-        public List<ValueNodeOutputViewModel<int?>> outputList { get; } = new List<ValueNodeOutputViewModel<int?>>();
 
         public IoNodeViewModel()
         {
             Name = "IO";
         }
+
+        public List<IONodeInputViewModel> inputList { get; } = new List<IONodeInputViewModel>();
+        public List<IONodeOutputViewModel> outputList { get; } = new List<IONodeOutputViewModel>();
         
-        
-        public void addInput(string name, int val)
+        public void addInput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel InputValueEditor = new IntegerValueEditorViewModel();
-
-            ValueNodeInputViewModel<int?> input = new ValueNodeInputViewModel<int?>
+ 
+            IONodeInputViewModel input = new IONodeInputViewModel()
             {
                 Name = name,
                 Editor = InputValueEditor,
+                Descendants = descendants
             };
 
             inputList.Add(input);
-
             InputValueEditor.SetValue(val);
-            this.Inputs.Add(input);
+            Inputs.Add(input);
         }
 
-        public void addOutput(string name, int val)
+        public void addOutput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel OutputValueEditor = new IntegerValueEditorViewModel();
-
-            ValueNodeOutputViewModel<int?> Output = new ValueNodeOutputViewModel<int?>
+            
+            IONodeOutputViewModel output = new IONodeOutputViewModel
             {
                 Name = name,
                 Editor = OutputValueEditor,
+                Descendants = descendants
             };
-
+            
+            outputList.Add(output);
             OutputValueEditor.SetValue(val);
-            this.Outputs.Add(Output);
+            Outputs.Add(output);
         }
 
         public void SetValue(int pos, int val)
@@ -75,5 +79,27 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(con2, con1);
             NVM.Connections.Add(newConnection);
         }
+    }
+
+    internal class IONodeInputViewModel : ValueNodeInputViewModel<int?>
+    {
+        public List<XElement> Descendants = new List<XElement>();
+
+        static IONodeInputViewModel()
+        {
+            NNViewRegistrar.AddRegistration(() => new NodeInputView(), typeof(IViewFor<IONodeInputViewModel>));
+        }
+    }
+
+    internal class IONodeOutputViewModel : ValueNodeOutputViewModel<int?>
+    {
+        public List<XElement> Descendants = new List<XElement>();
+
+        static IONodeOutputViewModel()
+        {
+            NNViewRegistrar.AddRegistration(() => new NodeOutputView(), typeof(IViewFor<IONodeOutputViewModel>));
+        }
+
+        
     }
 }
