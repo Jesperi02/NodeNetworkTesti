@@ -34,7 +34,7 @@ namespace NodeNetworkTesti.ViewModels.Nodes
         public List<IONodeInputViewModel> inputList { get; } = new List<IONodeInputViewModel>();
         public List<IONodeOutputViewModel> outputList { get; } = new List<IONodeOutputViewModel>();
         
-        public void addInput(string name, int val, List<XElement> descendants)
+        public IONodeInputViewModel addInput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel InputValueEditor = new IntegerValueEditorViewModel();
  
@@ -48,9 +48,11 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             inputList.Add(input);
             InputValueEditor.SetValue(val);
             Inputs.Add(input);
+
+            return input;
         }
 
-        public void addOutput(string name, int val, List<XElement> descendants)
+        public IONodeOutputViewModel addOutput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel OutputValueEditor = new IntegerValueEditorViewModel();
             
@@ -64,20 +66,13 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             outputList.Add(output);
             OutputValueEditor.SetValue(val);
             Outputs.Add(output);
+
+            return output;
         }
 
         public void SetValue(int pos, int val)
         {
             //inputList[pos].SetValue(val);
-        }
-
-        public void addConnection(NetworkViewModel NVM, IoNodeViewModel node, int outPos, int inPos)
-        {
-            NodeOutputViewModel con1 = outputList[outPos];
-            NodeInputViewModel con2 = node.inputList[inPos];
-
-            ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(con2, con1);
-            NVM.Connections.Add(newConnection);
         }
     }
 
@@ -100,6 +95,10 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             NNViewRegistrar.AddRegistration(() => new NodeOutputView(), typeof(IViewFor<IONodeOutputViewModel>));
         }
 
-        
+        public void addConnection(NetworkViewModel NVM, IONodeInputViewModel input)
+        {
+            ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(input, this);
+            NVM.Connections.Add(newConnection);
+        }
     }
 }

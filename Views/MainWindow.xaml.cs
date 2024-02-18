@@ -81,6 +81,11 @@ namespace NodeNetworkTesti.Views
 
         private void openButtonClick(object sender, RoutedEventArgs e)
         {
+            // Lists for connections
+            Dictionary<int, IONodeInputViewModel> inputConDict = new Dictionary<int, IONodeInputViewModel>();
+            List<IONodeInputViewModel> inputConList = new List<IONodeInputViewModel>();
+            List<IONodeOutputViewModel> outputConList =  new List<IONodeOutputViewModel>();
+
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".xml"; // Default file extension
@@ -96,8 +101,9 @@ namespace NodeNetworkTesti.Views
                 string filename = dialog.FileName;
 
                 XDocument doc = XDocument.Load(filename);
+
+                // create all nodes
                 List<XElement> functionElements = doc.Descendants("FUNCTION").ToList();
-                
                 foreach (XElement function in functionElements)
                 {
                     string nodeName = function.Element("GUI-NAME").Value; // FUNCTION GUI-NAME
@@ -116,9 +122,7 @@ namespace NodeNetworkTesti.Views
                     functionModel.Name = nodeName;
 
                     List<XElement> ioElements = function.Descendants("IO").ToList();
-                    foreach (XElement io in ioElements) {
-                        // tee juttuja ioilla
-                        
+                    foreach (XElement io in ioElements) { // create node inputs / outputs
                         string ioNimi = io.Element("GUI-NAME").Value;
                         string ioValue = io.Element("VALUE").Value;
                         string ioPos = io.Element("POS").Value;
@@ -156,23 +160,32 @@ namespace NodeNetworkTesti.Views
 
                         if (port == "In")
                         {
-                            functionModel.addInput(ioNimi, ioValueInt, descendants);
+                            IONodeInputViewModel input = functionModel.addInput(ioNimi, ioValueInt, descendants);
+
+                            if (ioPos.Length > 0) // if we have a connection
+                            {
+                                inputConList.Add(input);
+                            }
                         }
                         else // Output
                         {
-                            functionModel.addOutput(ioNimi, ioValueInt, descendants);
+                            IONodeOutputViewModel output = functionModel.addOutput(ioNimi, ioValueInt, descendants);
+
+                            if (ioPos.Length > 0) // if we have a connection
+                            {
+                                outputConList.Add(output);
+                            }
                         }
+                    } // close io creation loop
 
-                        
-                    }
+                    ViewModel.NetworkViewModel.Nodes.Add(functionModel); // add node
+                } // close node creation loop
+
+                // create all connections
+                foreach (IONodeOutputViewModel output in outputConList)
+                {
                     
-                    
-                    ViewModel.NetworkViewModel.Nodes.Add(functionModel);
-
-
-
                 }
-
             }
 
 
