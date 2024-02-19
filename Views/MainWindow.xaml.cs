@@ -194,30 +194,22 @@ namespace NodeNetworkTesti.Views
             // Show save file dialog box
             bool? result = dialog.ShowDialog();
 
-            //TÄMÄ TALLENTAA VALUE TAGIIN UUDEN ARVON
-            /* 
-             // Process save file dialog box results
-             if (result == true)
-             {
-                // Save document
-                string filename = dialog.FileName;
-                string xmlFilePath = filename;
+           
 
-                XDocument doc = XDocument.Load(xmlFilePath);
+             //List<IoNodeViewModel> nodeList = (List<IoNodeViewModel>) ViewModel.NetworkViewModel.Nodes;
+            
+            
+            IoNodeViewModel ConvertNodeViewModelToIoNodeViewModel(NodeViewModel nodeViewModel)
+            {
+                
+                IoNodeViewModel ioNodeViewModel = new IoNodeViewModel();
+                ioNodeViewModel.Name = nodeViewModel.Name;
+                
+                return ioNodeViewModel;
+            }
 
-                // Replace tag value
-                foreach (var valueElement in doc.Descendants("VALUE"))
-                {
-                    if (valueElement != null)
-                    {
-                        valueElement.Value = "234324";
-                    }
-                }
+            
 
-                doc.Save(xmlFilePath);
-            */
-
-            List<IoNodeViewModel> nodeList = (List<IoNodeViewModel>) ViewModel.NetworkViewModel.Nodes;
 
             //TÄMÄ TEKEE UUDEN XML TIEDOSTON
             if (result == true)
@@ -225,20 +217,62 @@ namespace NodeNetworkTesti.Views
                 // Save document
                 string filename = dialog.FileName;
 
-                // Create a new XDocument with root element
-                XDocument doc = new XDocument(new XElement("Root"));
+                // tekee uuden xdocumentint jossa roottina program tagi
+                XDocument doc = new XDocument(new XElement("PROGRAM"));
 
-                // Add an example VALUE element
-                doc.Root.Add(new XElement("VALUE", "234324"));
+                
+                
+
+                foreach (var nodeViewModel in ViewModel.NetworkViewModel.Nodes.Items)
+                {
+                    // tekee FUNCTION elementin jokaiselle GUI-NAMELLE
+                    XElement functionElement = new XElement("FUNCTION");
+
+                    // Kääntää  NodeViewModelin  IoNodeViewModeliksi
+                    IoNodeViewModel ioNodeViewModel = ConvertNodeViewModelToIoNodeViewModel(nodeViewModel);
+
+                    // Lisää GUI-NAME element FUNCTION alle
+                    functionElement.Add(new XElement("GUI-NAME", ioNodeViewModel.Name));
+
+                    // LIsää IOS element  FUNCTION alle
+                    XElement iosElement = new XElement("IOS");
+                    functionElement.Add(iosElement);
+
+                    // Lisää IO element  IOS alle
+                    XElement ioElement = new XElement("IO");
+                    iosElement.Add(ioElement);
+                    ioElement.Add(new XElement("Name", "testi"));
+                    //testi että onko input lista tyhjä
+                    if (ioNodeViewModel.Inputs.Count == 0) 
+                    { 
+                        Debug.WriteLine("List is empty!");
+                    }
+                    
+                    foreach (var inputViewModel in ioNodeViewModel.inputList)
+                    {
+                        ioElement.Add(new XElement("GUI-NAME", inputViewModel.Name));
+                        ioElement.Add(new XElement("VALUE", inputViewModel.Editor));
+                        
+                    }
+                    
+
+                    foreach (var outputViewModel in ioNodeViewModel.Outputs.Items)
+                    {
+                        ioElement.Add(new XElement("GUI-NAME", outputViewModel.Name));
+                        ioElement.Add(new XElement("VALUE", outputViewModel.Editor));
+                    }
 
 
-
+                    // Lisää  FUNCTION element documentin rootiks
+                    doc.Root.Add(functionElement);
+                }
+                
                 // Save the new XML document
                 doc.Save(filename);
             }
 
         }
-
+        // LUKEE NODELISTAN JA TALLENTAA TIEDOT UUTEEN XML TIEDOSTOON // TEHDÄÄN PROGRAM TAGI JA SEN ALLE FUNCTIO SEKÄ IOT=?!!
 
 
 
