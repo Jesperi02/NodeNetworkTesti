@@ -22,7 +22,7 @@
                     Height="30px"
                     VerticalAlignment="Bottom"
                     Margin="50"
-                    Click="autoLayout">Auto Layout</Button>
+                    Click="layoutClick">Auto Layout</Button>
         </Grid>
         
         <GridSplitter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="5"/>

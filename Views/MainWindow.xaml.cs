@@ -30,6 +30,7 @@ using System.Xml;
 using System.Windows.Markup;
 using NodeNetwork.Toolkit.ValueNode;
 using Xceed.Wpf.Toolkit.Primitives;
+using static NodeNetworkTesti.ViewModels.IONodePortViewModel;
 
 namespace NodeNetworkTesti.Views
 {
@@ -55,7 +56,12 @@ namespace NodeNetworkTesti.Views
         }
         #endregion
 
-        void autoLayout(object sender, RoutedEventArgs e)
+        public void layoutClick(object sender, RoutedEventArgs e)
+        {
+            autoLayout();
+        }
+
+        public void autoLayout()
         {
             ForceDirectedLayouter layouter = new ForceDirectedLayouter();
             var config = new Configuration
@@ -82,9 +88,10 @@ namespace NodeNetworkTesti.Views
         private void openButtonClick(object sender, RoutedEventArgs e)
         {
             // Lists for connections
-            Dictionary<int, IONodeInputViewModel> inputConDict = new Dictionary<int, IONodeInputViewModel>();
-            List<IONodeInputViewModel> inputConList = new List<IONodeInputViewModel>();
-            List<IONodeOutputViewModel> outputConList =  new List<IONodeOutputViewModel>();
+            Dictionary<int, List<IONodeInputViewModel<PortType>>> inputConDict = 
+                new Dictionary<int, List<IONodeInputViewModel<PortType>>>();
+
+            List<IONodeOutputViewModel<PortType>> outputConList =  new List<IONodeOutputViewModel<PortType>>();
 
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
@@ -135,6 +142,12 @@ namespace NodeNetworkTesti.Views
                             ioValueInt = int.Parse(ioValue);
                         }
 
+                        int ioPosInt = 0;
+                        if (ioPos.Length > 0)
+                        {
+                            ioPosInt = int.Parse(ioPos);
+                        }
+
                         // Onko määritelty Input / Output
                         string port = "";
 
@@ -158,18 +171,26 @@ namespace NodeNetworkTesti.Views
                             );
                         }
 
+                        // Add port to node
                         if (port == "In")
                         {
-                            IONodeInputViewModel input = functionModel.addInput(ioNimi, ioValueInt, descendants);
+                            IONodeInputViewModel<PortType> input = functionModel.addInput(ioNimi, ioValueInt, descendants);
 
-                            if (ioPos.Length > 0) // if we have a connection
+                            if (ioPosInt != 0) // if we have a connection
                             {
-                                inputConList.Add(input);
+                                if (inputConDict.ContainsKey(ioPosInt)) // if another input has con from the same output
+                                {
+                                    inputConDict[ioPosInt].Add(input);
+                                }
+                                else // add con list to dict
+                                {
+                                    inputConDict.Add(ioPosInt, new List<IONodeInputViewModel<PortType>>() { input });
+                                }
                             }
                         }
                         else // Output
                         {
-                            IONodeOutputViewModel output = functionModel.addOutput(ioNimi, ioValueInt, descendants);
+                            IONodeOutputViewModel<PortType> output = functionModel.addOutput(ioNimi, ioValueInt, ioPosInt, descendants);
 
                             if (ioPos.Length > 0) // if we have a connection
                             {
@@ -182,15 +203,21 @@ namespace NodeNetworkTesti.Views
                 } // close node creation loop
 
                 // create all connections
-                foreach (IONodeOutputViewModel output in outputConList)
+                foreach (IONodeOutputViewModel<PortType> output in outputConList)
                 {
-                    
+                    if (inputConDict.ContainsKey(output.connectionPos))
+                    {
+                        var conList = inputConDict[output.connectionPos];
+
+                        foreach (IONodeInputViewModel<PortType> input in conList)
+                        {
+                            output.addConnection(ViewModel.NetworkViewModel, input);
+                        }
+                    }
                 }
-            }
+            } // close file handler
 
-
-
-
+            autoLayout();
         }
 
 

@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
 using Xceed.Wpf.Toolkit.Primitives;
+using static NodeNetworkTesti.ViewModels.IONodePortViewModel;
 
 namespace NodeNetworkTesti.ViewModels.Nodes
 {
@@ -31,14 +32,14 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             Name = "IO";
         }
 
-        public List<IONodeInputViewModel> inputList { get; } = new List<IONodeInputViewModel>();
-        public List<IONodeOutputViewModel> outputList { get; } = new List<IONodeOutputViewModel>();
+        public List<IONodeInputViewModel<PortType>> inputList { get; } = new List<IONodeInputViewModel<PortType>>();
+        public List<IONodeOutputViewModel<PortType>> outputList { get; } = new List<IONodeOutputViewModel<PortType>>();
         
-        public IONodeInputViewModel addInput(string name, int val, List<XElement> descendants)
+        public IONodeInputViewModel<PortType> addInput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel InputValueEditor = new IntegerValueEditorViewModel();
  
-            IONodeInputViewModel input = new IONodeInputViewModel()
+            IONodeInputViewModel<PortType> input = new IONodeInputViewModel<PortType>(PortType.Input)
             {
                 Name = name,
                 Editor = InputValueEditor,
@@ -52,15 +53,16 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             return input;
         }
 
-        public IONodeOutputViewModel addOutput(string name, int val, List<XElement> descendants)
+        public IONodeOutputViewModel<PortType> addOutput(string name, int val, int pos, List<XElement> descendants)
         {
             IntegerValueEditorViewModel OutputValueEditor = new IntegerValueEditorViewModel();
             
-            IONodeOutputViewModel output = new IONodeOutputViewModel
+            IONodeOutputViewModel<PortType> output = new IONodeOutputViewModel<PortType>(PortType.Output)
             {
                 Name = name,
                 Editor = OutputValueEditor,
-                Descendants = descendants
+                Descendants = descendants,
+                connectionPos = pos
             };
             
             outputList.Add(output);
@@ -73,32 +75,6 @@ namespace NodeNetworkTesti.ViewModels.Nodes
         public void SetValue(int pos, int val)
         {
             //inputList[pos].SetValue(val);
-        }
-    }
-
-    internal class IONodeInputViewModel : ValueNodeInputViewModel<int?>
-    {
-        public List<XElement> Descendants = new List<XElement>();
-
-        static IONodeInputViewModel()
-        {
-            NNViewRegistrar.AddRegistration(() => new NodeInputView(), typeof(IViewFor<IONodeInputViewModel>));
-        }
-    }
-
-    internal class IONodeOutputViewModel : ValueNodeOutputViewModel<int?>
-    {
-        public List<XElement> Descendants = new List<XElement>();
-
-        static IONodeOutputViewModel()
-        {
-            NNViewRegistrar.AddRegistration(() => new NodeOutputView(), typeof(IViewFor<IONodeOutputViewModel>));
-        }
-
-        public void addConnection(NetworkViewModel NVM, IONodeInputViewModel input)
-        {
-            ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(input, this);
-            NVM.Connections.Add(newConnection);
         }
     }
 }
