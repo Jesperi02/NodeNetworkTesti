@@ -39,15 +39,6 @@ namespace NodeNetworkTesti.ViewModels
 
         public MainViewModel()
         {
-            ListViewModel.AddNodeType(() => new SumNodeViewModel());
-            ListViewModel.AddNodeType(() => new SubtractionNodeViewModel());
-            ListViewModel.AddNodeType(() => new ProductNodeViewModel());
-            ListViewModel.AddNodeType(() => new DivisionNodeViewModel());
-            ListViewModel.AddNodeType(() => new ConstantNodeViewModel());
-            ListViewModel.AddNodeType(() => new TestiNodeViewModel());
-            ListViewModel.AddNodeType(() => new ADA16NodeViewModel());
-            ListViewModel.AddNodeType(() => new ADA16ReceiveNodeViewModel());
-
             NetworkViewModel.Validator = network =>
             {
                 bool containsLoops = GraphAlgorithms.FindLoops(network).Any();

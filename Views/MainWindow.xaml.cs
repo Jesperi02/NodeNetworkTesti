@@ -88,10 +88,10 @@ namespace NodeNetworkTesti.Views
         private void openButtonClick(object sender, RoutedEventArgs e)
         {
             // Lists for connections
-            Dictionary<int, List<IONodeInputViewModel<PortType>>> inputConDict = 
-                new Dictionary<int, List<IONodeInputViewModel<PortType>>>();
+            Dictionary<int, List<IONodeInputViewModel>> inputConDict = 
+                new Dictionary<int, List<IONodeInputViewModel>>();
 
-            List<IONodeOutputViewModel<PortType>> outputConList =  new List<IONodeOutputViewModel<PortType>>();
+            List<IONodeOutputViewModel> outputConList =  new List<IONodeOutputViewModel >();
 
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document"; // Default file name
@@ -174,7 +174,7 @@ namespace NodeNetworkTesti.Views
                         // Add port to node
                         if (port == "In")
                         {
-                            IONodeInputViewModel<PortType> input = functionModel.addInput(ioNimi, ioValueInt, descendants);
+                            IONodeInputViewModel input = functionModel.addInput(ioNimi, ioValueInt, descendants);
 
                             if (ioPosInt != 0) // if we have a connection
                             {
@@ -184,13 +184,13 @@ namespace NodeNetworkTesti.Views
                                 }
                                 else // add con list to dict
                                 {
-                                    inputConDict.Add(ioPosInt, new List<IONodeInputViewModel<PortType>>() { input });
+                                    inputConDict.Add(ioPosInt, new List<IONodeInputViewModel>() { input });
                                 }
                             }
                         }
                         else // Output
                         {
-                            IONodeOutputViewModel<PortType> output = functionModel.addOutput(ioNimi, ioValueInt, ioPosInt, descendants);
+                            IONodeOutputViewModel output = functionModel.addOutput(ioNimi, ioValueInt, ioPosInt, descendants);
 
                             if (ioPos.Length > 0) // if we have a connection
                             {
@@ -203,13 +203,13 @@ namespace NodeNetworkTesti.Views
                 } // close node creation loop
 
                 // create all connections
-                foreach (IONodeOutputViewModel<PortType> output in outputConList)
+                foreach (IONodeOutputViewModel output in outputConList)
                 {
                     if (inputConDict.ContainsKey(output.connectionPos))
                     {
                         var conList = inputConDict[output.connectionPos];
 
-                        foreach (IONodeInputViewModel<PortType> input in conList)
+                        foreach (IONodeInputViewModel input in conList)
                         {
                             output.addConnection(ViewModel.NetworkViewModel, input);
                         }

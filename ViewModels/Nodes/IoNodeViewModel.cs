@@ -32,14 +32,14 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             Name = "IO";
         }
 
-        public List<IONodeInputViewModel<PortType>> inputList { get; } = new List<IONodeInputViewModel<PortType>>();
-        public List<IONodeOutputViewModel<PortType>> outputList { get; } = new List<IONodeOutputViewModel<PortType>>();
+        public List<IONodeInputViewModel> inputList { get; } = new List<IONodeInputViewModel>();
+        public List<IONodeOutputViewModel> outputList { get; } = new List<IONodeOutputViewModel>();
         
-        public IONodeInputViewModel<PortType> addInput(string name, int val, List<XElement> descendants)
+        public IONodeInputViewModel addInput(string name, int val, List<XElement> descendants)
         {
             IntegerValueEditorViewModel InputValueEditor = new IntegerValueEditorViewModel();
  
-            IONodeInputViewModel<PortType> input = new IONodeInputViewModel<PortType>(PortType.Input)
+            IONodeInputViewModel input = new IONodeInputViewModel()
             {
                 Name = name,
                 Editor = InputValueEditor,
@@ -53,11 +53,11 @@ namespace NodeNetworkTesti.ViewModels.Nodes
             return input;
         }
 
-        public IONodeOutputViewModel<PortType> addOutput(string name, int val, int pos, List<XElement> descendants)
+        public IONodeOutputViewModel addOutput(string name, int val, int pos, List<XElement> descendants)
         {
             IntegerValueEditorViewModel OutputValueEditor = new IntegerValueEditorViewModel();
             
-            IONodeOutputViewModel<PortType> output = new IONodeOutputViewModel<PortType>(PortType.Output)
+            IONodeOutputViewModel output = new IONodeOutputViewModel()
             {
                 Name = name,
                 Editor = OutputValueEditor,

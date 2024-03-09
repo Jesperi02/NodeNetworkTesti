@@ -1,4 +1,5 @@
 ﻿using NodeNetwork.ViewModels;
+using NodeNetworkTesti.Views;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NodeNetworkTesti.ViewModels
 {
-    internal class IONodePendingConnectionViewModel : PendingConnectionViewModel
+    public class IONodePendingConnectionViewModel : PendingConnectionViewModel
     {
         static IONodePendingConnectionViewModel()
         {

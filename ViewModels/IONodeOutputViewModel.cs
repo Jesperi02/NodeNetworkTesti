@@ -14,7 +14,7 @@ using static NodeNetworkTesti.ViewModels.IONodePortViewModel;
 
 namespace NodeNetworkTesti.ViewModels
 {
-    internal class IONodeOutputViewModel<T> : ValueNodeOutputViewModel<int?>
+    internal class IONodeOutputViewModel : NodeOutputViewModel
     {
         public List<XElement> Descendants = new List<XElement>();
 
@@ -22,18 +22,18 @@ namespace NodeNetworkTesti.ViewModels
 
         static IONodeOutputViewModel()
         {
-            NNViewRegistrar.AddRegistration(() => new NodeOutputView(), typeof(IViewFor<IONodeOutputViewModel<PortType>>));
+            NNViewRegistrar.AddRegistration(() => new NodeOutputView(), typeof(IViewFor<IONodeOutputViewModel>));
         }
 
-        public void addConnection(NetworkViewModel NVM, IONodeInputViewModel<PortType> input)
+        public void addConnection(NetworkViewModel NVM, IONodeInputViewModel input)
         {
             ConnectionViewModel newConnection = NVM.ConnectionFactory.Invoke(input, this);
             NVM.Connections.Add(newConnection);
         }
 
-        public IONodeOutputViewModel(PortType type)
+        public IONodeOutputViewModel()
         {
-            this.Port = new IONodePortViewModel { portType = type };
+            this.Port = new IONodePortViewModel { portType = PortType.Output };
 
             this.PortPosition = PortPosition.Right;
         }

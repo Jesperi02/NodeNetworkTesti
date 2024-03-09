@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NodeNetworkTesti.ViewModels"
+             xmlns:views="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
              xmlns:local1="clr-namespace:NodeNetworkTesti.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="100" d:DesignWidth="100">
     <UserControl.Resources>
         <ControlTemplate x:Key="{x:Static local1:IONodePortView.InputPortTemplateKey}" TargetType="views:PortView">
             <Viewbox StretchDirection="Both" Stretch="Uniform">

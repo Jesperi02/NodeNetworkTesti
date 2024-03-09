@@ -13,18 +13,18 @@ using NodeNetwork.ViewModels;
 
 namespace NodeNetworkTesti.ViewModels
 {
-    public class IONodeInputViewModel<T> : ValueNodeInputViewModel<int?>
+    public class IONodeInputViewModel : NodeInputViewModel
     {
         public List<XElement> Descendants = new List<XElement>();
 
         static IONodeInputViewModel()
         {
-            NNViewRegistrar.AddRegistration(() => new NodeInputView(), typeof(IViewFor<IONodeInputViewModel<T>>));
+            NNViewRegistrar.AddRegistration(() => new NodeInputView(), typeof(IViewFor<IONodeInputViewModel>));
         }
 
-        public IONodeInputViewModel(PortType type)
+        public IONodeInputViewModel()
         {
-            this.Port = new IONodePortViewModel { portType = type };
+            this.Port = new IONodePortViewModel { portType = PortType.Input };
 
             this.PortPosition = PortPosition.Left;
         }
